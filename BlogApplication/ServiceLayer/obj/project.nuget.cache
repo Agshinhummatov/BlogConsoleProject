@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "2j2fz+iLqwXpmFoOqFQn9uIwBIe1LVAjk+Qh2cXWhFDX9BvD5rC/eD2oHY79FZWFdCLvnG6hH2L7xJjjHymjog==",
+  "dgSpecHash": "Ecx993MA6YOnv2uIRYKPYRPoSvwH33qSejwm7jCQDLjWbMrvI4lp7foJFwv88ZJcLKtlkGgaK4zEhgCiBBNoNw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Acer\\Desktop\\BlogConsle\\BlogApplication\\ServiceLayer\\ServiceLayer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Acer\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
