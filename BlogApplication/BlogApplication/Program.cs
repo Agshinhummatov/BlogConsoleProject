@@ -1,16 +1,18 @@
 ﻿
 using BlogApplication.Controllers;
 using ServiceLayer.Helpers;
+using ServiceLayer.Helpers.Constants;
 using ServiceLayer.Helpers.Enums;
 
 BlogController blogController = new();
+
 
 
 while (true)
 {
     GetOptions();
 
-     Option: string option = Console.ReadLine();
+Option: string option = Console.ReadLine();
 
     int selectOption;
 
@@ -22,22 +24,34 @@ while (true)
         {
 
             case (int)Options.CreateBlog:
-                blogController.Create();
+                blogController.CreateBlog();
                 break;
             case
                 (int)Options.GetAllBlogs:
-                blogController.GetAll();
+                blogController.GetAllBlogs();
+                break;
+            case (int)Options.DeleteBlog:
+                blogController.DeleteBlog();
+                break;
+            case (int)Options.SearchBlog:
+                blogController.SearchBlog();
+                break;
+            case (int)Options.GetBlogById:
+                blogController.GetBlogById();
+                break;
+            case (int)Options.UpdateBlog:
+                blogController.UpdateBlog();
                 break;
 
             default:
-                ConsoleColor.Red.WriteConsole("Please add correct option");
+                ConsoleColor.Red.WriteConsole(ResponseMessages.CorrectOption);
                 goto Option;
 
         }
     }
     else
     {
-        ConsoleColor.Red.WriteConsole("Please add correct format option");
+        ConsoleColor.Red.WriteConsole(ResponseMessages.CorrecFormatOption);
         goto Option;
 
     }
@@ -46,6 +60,6 @@ while (true)
 
 static void GetOptions()
 {
-    ConsoleColor.Cyan.WriteConsole("Please select one option :");
-    ConsoleColor.Cyan.WriteConsole("Blog options : \n 1 - Create Blog, \n 2 - Get all Blog,");
+    ConsoleColor.Cyan.WriteConsole(ResponseMessages.SelectOption);
+    ConsoleColor.Cyan.WriteConsole(ResponseMessages.OptionsMessage);
 }

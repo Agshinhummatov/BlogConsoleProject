@@ -9,6 +9,10 @@ namespace ServiceLayer.Helpers.Enums
     public enum Options
     {
         CreateBlog = 1,
-        GetAllBlogs
+        GetAllBlogs,
+        DeleteBlog,
+        SearchBlog,
+        GetBlogById,
+        UpdateBlog,
     }
 }

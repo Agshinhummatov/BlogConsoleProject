@@ -9,15 +9,12 @@ namespace ServiceLayer.Services.Interfaces
 {
     public interface IBlogService
     {
-
-        Blog Create(Blog teacher);
-
-        public void Delete(int? id);
-        Blog GetById(int? id);
-        List<Blog> Search(string searchText);
-
-        List<Blog> GetAll();
-        Blog Update(int? id, Blog teacher);
-
+        Blog GetBlogById(int id);
+        IEnumerable<Blog> GetAllBlogs();
+        IEnumerable<Blog> FindBlogs(Func<Blog, bool> predicate);
+        IEnumerable<Blog> SearchBlogs(string keyword);
+        void CreateBlog(string title, string content, Author author, List<Tag> tags);
+        void UpdateBlog(int id, string title, string content, Author author, List<Tag> tags);
+        void DeleteBlog(int id);
     }
 }

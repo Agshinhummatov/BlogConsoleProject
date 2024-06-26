@@ -9,12 +9,11 @@ namespace RepositoryLayer.Repositories.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        void Create(T entity);
-        void Delete(T entity);
+        T GetById(int id);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> Find(Func<T, bool> predicate);
+        void Add(T entity);
         void Update(T entity);
-        T Get(Predicate<T> predicate);
-        List<T> GetAll(Predicate<T> predicate);
-
-
+        void Remove(T entity);
     }
 }

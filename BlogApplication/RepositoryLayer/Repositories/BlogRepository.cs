@@ -8,49 +8,84 @@ namespace RepositoryLayer.Repositories
     public class BlogRepository : IRepository<Blog>
     {
         private readonly string _filePath = "blogs.json";
+        private List<Blog> _blogs;
 
         public BlogRepository()
+        {
+            InitializeData();
+        }
+
+        private void InitializeData()
         {
             if (!File.Exists(_filePath))
             {
                 File.WriteAllText(_filePath, "[]");
             }
+
+            string jsonData = File.ReadAllText(_filePath);
+            _blogs = JsonConvert.DeserializeObject<List<Blog>>(jsonData);
         }
 
-        public void Create(Blog entity)
+        public Blog GetById(int id)
         {
-            if (entity == null) throw new ArgumentNullException();
-
-            var blogs = GetAll();
-            blogs.Add(entity);
-            SaveToFile(blogs);
+            return _blogs.FirstOrDefault(b => b.Id == id);
         }
 
-        public void Delete(Blog entity)
+        public IEnumerable<Blog> GetAll()
         {
-            throw new NotImplementedException();
+            return _blogs;
         }
 
-        public Blog Get(Predicate<Blog> predicate)
+        public IEnumerable<Blog> Find(Func<Blog, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _blogs.Where(predicate);
         }
 
-        public List<Blog> GetAll(Predicate<Blog> predicate = null)
+        public void Add(Blog entity)
         {
-            var blogs = JsonConvert.DeserializeObject<List<Blog>>(File.ReadAllText(_filePath));
-            return predicate == null ? blogs : blogs.FindAll(predicate);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            entity.Id = _blogs.Count > 0 ? _blogs.Max(b => b.Id) + 1 : 1;
+            _blogs.Add(entity);
+            SaveChanges();
         }
 
         public void Update(Blog entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var existingBlog = GetById(entity.Id);
+            if (existingBlog != null)
+            {
+                existingBlog.Title = entity.Title;
+                existingBlog.Content = entity.Content;
+                existingBlog.Author = entity.Author;
+                existingBlog.Tags = entity.Tags;
+                SaveChanges();
+            }
         }
 
-
-        private void SaveToFile(List<Blog> blogs)
+        public void Remove(Blog entity)
         {
-            File.WriteAllText(_filePath, JsonConvert.SerializeObject(blogs, Formatting.Indented));
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _blogs.Remove(entity);
+            SaveChanges();
+        }
+
+        private void SaveChanges()
+        {
+            string jsonData = JsonConvert.SerializeObject(_blogs, Formatting.Indented);
+            File.WriteAllText(_filePath, jsonData);
         }
     }
 }
